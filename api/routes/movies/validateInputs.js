@@ -5,9 +5,9 @@ async function validateNewMovie(req, res, next) {
     if (Object.keys(req.body).length !== 3) {
         return res.status(400).json({message: "Objects in the rear view mirror may appear closer than they are."})
     }
-    // if (!!req.body.title || !!req.body.director || !!req.body.metascore) {
-    //     return res.status(400).json({message: "Objects in the rear view mirror may appear closer than they are."})
-    // }
+    if (!req.body.title || !req.body.director || !req.body.metascore) {
+        return res.status(400).json({message: "Objects in the rear view mirror may appear closer than they are."})
+    }
     const movie = await Movies.findBy({title: req.body.title})
     // movie is an Array
     if (movie.length > 0) {
