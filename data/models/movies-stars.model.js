@@ -1,4 +1,4 @@
-const db = require('../data/dbConfig');
+const db = require('../dbConfig');
 
 async function findStarsBy(movie_id) {
     const stars = await db('movies_stars').where({movie_id})
@@ -18,8 +18,8 @@ async function findStarsBy(movie_id) {
 }
 
 async function addStarToMovie(starMovie) {
-    const [movie_id] = await db('movies_stars').insert(starMovie);
-    return findStarsBy(movie_id);
+    const [movie] = await db('movies_stars').insert(starMovie);
+    return await findStarsBy(movie);
 }
 
 function removeStarFromMovie(movie_id, stars_id) {

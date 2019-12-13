@@ -1,13 +1,9 @@
-//import any dependencies
+const express = require('express');
+const middleware = require('./middleware/serverMiddleware');
+const routes = require('./routes/routes.index');
 
-//import our routers
+const server = express();
+middleware(server);
+routes(server);
 
-//define express()
-
-//use our dependencies
-
-//use our routers(set up our base urls and what router they belong to)
-
-//sanity check
-
-//export
+module.exports = server;

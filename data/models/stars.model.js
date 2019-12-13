@@ -1,4 +1,4 @@
-const db = require('../data/dbConfig');
+const db = require('../dbConfig');
 
 async function find() {
     const stars = await db('stars');

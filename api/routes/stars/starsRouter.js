@@ -1,17 +1,59 @@
-//bring in our imports(router, model, customMiddleware if needed etc.)
+const starRouter = require('express').Router();
+const Stars = require('../../../data/models/stars.model');
+const validateStars = require('./validateInputs')
 
-//build out our routes
+async function getAllStars(req, res) {
+    try {
+        const stars = await Stars.find();
+        res.json(stars);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
 
-//get all stars
+async function getStarById(req, res) {
+    try {
+        const star = await Stars.findBy({id: req.params.id})
+        res.json(star[0])
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
-//get a star by id
+async function addNewStar(req, res) {
+    try {
+        const star = await Stars.addStar(req.body);
+        res.status(201).json(star[0]);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
 
-//get a star's movies
+async function updateStar(req, res) {
+    try {
+        const star = await Stars.updateStar(req.params.id, req.body);
+        res.json(star[0]);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
-//post a new star
+async function deleteStar(req, res) {
+    try {
+        const count = await Stars.deleteStar(req.params.id);
+        res.json(count);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
-//edit a star
+starRouter
+    .get('/', getAllStars)
+    .get('/:id', getStarById)
+    .post('/', validateStars.validateNewStar, addNewStar)
+    .put('/:id', validateStars.validateUpdateStar, updateStar)
+    .delete('/:id', deleteStar)
 
-//delete a star
-
-//export
+module.exports = starRouter;

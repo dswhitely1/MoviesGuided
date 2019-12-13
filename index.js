@@ -1,7 +1,4 @@
-//import any dependencies
-//set up environmental config
-////setting up environmental variables////
+const server = require('./api/server');
+const PORT = process.env.PORT || 5000;
 
-//define environmental variables if needed
-
-//set up our server.listen
+server.listen(PORT, ()=> console.log(`\n*** Server listening on PORT:${PORT} ***\n`));
